@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>cal.html</title>
+    <script src="js/jquery-3.5.1.min.js"></script>
+    <style>
+        td{
+            width:300px;
+            height:200px;
+        }
+    </style>
+    <script>
+
+       
+        $(document).ready(function(){
+
+           
+            $('#showResult').on('click',function(){
+                let test=prompt("test",'');
+                console.log(test);
+                let kk=$(this).attr('showResult',test);
+                console.log(kk);
+
+                
+               // alert("내용을입력하시오:"+prompt("test",''));
+                
+              //  let dd=document.getElementById('showResult').childNodes[0].childNodes[1].append(test);
+               // console.log(dd);
+            });
+            let test=$('#select').on('click',function(event){
+                event.preventDefault();
+           let month=document.getElementById("month");
+           let year=document.getElementById("year");
+           month=month.options[month.selectedIndex].value;
+           year=year.options[year.selectedIndex].value;
+            
+
+           let m1 = $('#month').val();
+             let year1= $('#year').val();
+
+           console.log(m1);
+           console.log(month);
+           console.log(year1);
+           console.log(year);
+           
+          
+           let today=new Date(2020,(month-1));
+           //today.setUTCFullYear(year*1);
+          // console.log(today.getFullYear());
+           today.setDate(1);
+           //today.setMonth(month+1);
+       
+           console.log(today.getDay());
+           let elem=document.getElementById("showResult");
+            let cols=['일','월','화','수','목','금','토'];
+
+            let tag=$('<table/>').attr('border','1');
+            let tr=$('<tr/>');
+            for(col of cols){
+                tr.append($('<th/>').html(col));
+            }
+            tag.append(tr);
+          
+            tag.append($("</tr>"));
+            for(let a=0;a<today.getDay();a++){
+                tag.append($('<td></td>'));
+            }
+           let day=30;
+            if(month==1||month==3||month==5||month==7||month==8||month==10||month==12){
+                day=31;
+            }
+            else if(month==2){
+                if(year%4==0){
+                    day=29;
+                }
+                else{
+                    day=28;
+                }
+            }
+            
+            for(let i=1;i<=day;i++){
+              tag.append($("<td>"+i+"</td>"));
+             if((i+today.getDay())%7==0){
+                 tag.append($("</tr><tr>"));
+             } 
+            }
+            $('#showResult').append(year+"년"+month+"월");
+            $('#showResult').html(tag);
+           
+           
+            
+        
+            });
+
+        });
+
+    </script>
+</head>
+<body>
+    <div id="showResult" style="border:1px;"></div>
+
+    년, 월을 선택하세요.
+    <select name="year" id="year">
+        <option value="2020">2020년</option>
+        <option value="2019">2019년</option>
+        <option value="2018">2018년</option>
+        <option value="2021">2021년</option>
+    </select>
+    <select name="month" id="month">
+        <option value="1">1월</option>
+        <option value="2">2월</option>
+        <option value="3">3월</option>
+        <option value="4">4월</option>
+        <option value="5">5월</option>
+        <option value="6">6월</option>
+        <option value="7">7월</option>
+        <option value="8">8월</option>
+        <option value="9">9월</option>
+        <option value="10">10월</option>
+        <option value="11">11월</option>
+        <option value="12">12월</option>
+
+
+    </select>
+    <button id="select">선택</button>
+</body>
+</html>
